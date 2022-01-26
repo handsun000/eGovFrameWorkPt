@@ -10,5 +10,9 @@
 		insert into nboard(unq, title, pass, name, content, hits, rdate)
 					values(nboard_seq.nextval, #title#, #pass#, #name#, #content#, 0, sysdate)
 	</insert>
-	
+	<select id="boardDAO.selectNBoardList" resultClass="egovMap">
+		select unq, title, name, hits, rdate
+									   from nboard
+									   order by unq desc
+	</select>
 </sqlMap>

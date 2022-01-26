@@ -1,13 +1,17 @@
 package main.web;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import main.service.BoardService;
 import main.service.BoardVO;
+import main.service.impl.BoardDAO;
 
 @Controller
 public class BoardController {
@@ -21,8 +25,13 @@ public class BoardController {
 		return "board/boardWrite";
 	}
 	
-	@RequestMapping(value = "boardWriteSave.do")
+	@RequestMapping(value = "boardTest.do")
+	public String boardTest() {
+		return "board/boardTest";
+	}
+	
 	@ResponseBody
+	@RequestMapping(value = "boardWriteSave.do")
 	public String boardWriteSave(BoardVO vo) throws Exception {
 		
 		System.out.println("저장해라");
@@ -33,6 +42,19 @@ public class BoardController {
 		else msg = "fail";
 		
 		return "msg";
+	}
+
+	
+	@RequestMapping(value = "boardList.do")
+	public String boardList(BoardVO vo, ModelMap model) throws Exception {
+		
+		List<?> resultList = boardService.selectNBoardList(vo);
+		
+		System.out.println("resultList = " + resultList);
+		
+		model.addAttribute("result", resultList);
+		
+		return "board/boardList";
 	}
 	
 }
